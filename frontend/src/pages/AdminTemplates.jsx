@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { toast } from 'react-toastify';
 import { templatesAPI } from '../services/api';
 
@@ -118,7 +118,7 @@ export default function AdminTemplates() {
               onClick={() => setShowCreateForm(true)}
               className="btn-primary"
             >
-              âž• Template Baru
+              <span className="material-symbols-rounded">add</span> Template Baru
             </button>
           )}
         </div>
@@ -187,7 +187,7 @@ export default function AdminTemplates() {
                   id="pdf-input"
                 />
                 <label htmlFor="pdf-input" className="cursor-pointer">
-                  <div className="text-4xl mb-2">ðŸ“„</div>
+                  <div className="text-4xl mb-2">📄</div>
                   <div className="text-sm text-stone-600">
                     {fileInputRef.current?.files?.[0]?.name || 'Klik untuk upload PDF atau drag-drop'}
                   </div>
@@ -214,7 +214,7 @@ export default function AdminTemplates() {
                 disabled={submitting}
                 className="btn-primary flex-1 disabled:opacity-50"
               >
-                {submitting ? 'â³ Menyimpan...' : editingId ? 'ðŸ’¾ Update' : 'âœ¨ Buat Template'}
+                {submitting ? '⏳ Menyimpan...' : editingId ? '💾 Update' : '✨ Buat Template'}
               </button>
               <button
                 type="button"
@@ -253,20 +253,20 @@ export default function AdminTemplates() {
                     <div className="mt-2 flex items-center gap-2">
                       {t.has_pdf ? (
                         <span className="inline-flex items-center gap-1 text-xs text-green-700 bg-green-50 px-2 py-0.5 rounded-full">
-                          âœ… PDF tersedia
+                          ✅ PDF tersedia
                         </span>
                       ) : (
                         <span className="inline-flex items-center gap-1 text-xs text-orange-700 bg-orange-50 px-2 py-0.5 rounded-full">
-                          âš ï¸ Belum ada PDF
+                          ⚠️ Belum ada PDF
                         </span>
                       )}
                       {t.is_active ? (
                         <span className="inline-flex items-center gap-1 text-xs text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full">
-                          âœ¨ Aktif
+                          ✨ Aktif
                         </span>
                       ) : (
                         <span className="inline-flex items-center gap-1 text-xs text-stone-700 bg-stone-50 px-2 py-0.5 rounded-full">
-                          âŠ˜ Nonaktif
+                          ⊘ Nonaktif
                         </span>
                       )}
                     </div>
@@ -279,14 +279,14 @@ export default function AdminTemplates() {
                     disabled={!!submitting || !!deleting}
                     className="px-3 py-1.5 text-sm bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 disabled:opacity-50"
                   >
-                    âœï¸ Edit
+                    ✏️ Edit
                   </button>
                   <button
                     onClick={() => handleDelete(t.id)}
                     disabled={deleting === t.id || !!submitting}
                     className="px-3 py-1.5 text-sm bg-red-50 text-red-700 rounded-lg hover:bg-red-100 disabled:opacity-50"
                   >
-                    {deleting === t.id ? 'â³' : 'ðŸ—‘ï¸'} {deleting === t.id ? 'Hapus...' : 'Hapus'}
+                    {deleting === t.id ? '⏳' : '🗑️'} {deleting === t.id ? 'Hapus...' : 'Hapus'}
                   </button>
                 </div>
               </div>
@@ -302,4 +302,3 @@ export default function AdminTemplates() {
     </div>
   );
 }
-

@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { checklistAPI } from '../services/api';
@@ -67,7 +67,7 @@ export default function ChecklistDetail() {
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-stone-500 mb-5">
         <Link to="/checklist/history" className="hover:text-samara-accent">History</Link>
-        <span>â€º</span>
+        <span>›</span>
         <span className="text-stone-900 font-medium truncate max-w-xs">{checklist.title}</span>
       </div>
 
@@ -79,14 +79,14 @@ export default function ChecklistDetail() {
               <h1 className="text-xl font-bold text-stone-900">{checklist.title}</h1>
               <StatusBadge status={checklist.status} />
             </div>
-            <p className="text-sm text-stone-500">{checklist.template_name} Â· {checklist.template_code}</p>
+            <p className="text-sm text-stone-500">{checklist.template_name} · {checklist.template_code}</p>
           </div>
           <div className="flex items-center gap-2 shrink-0">
             {checklist.status === 'completed' && (
-              <button onClick={handleDownload} className="btn-primary text-sm py-2">ðŸ“¥ Download PDF</button>
+              <button onClick={handleDownload} className="btn-primary text-sm py-2">📥 Download PDF</button>
             )}
             <button onClick={handleDelete} disabled={deleting} className="btn-danger text-sm py-2">
-              {deleting ? '...' : 'ðŸ—‘ Hapus'}
+              {deleting ? '...' : '🗑 Hapus'}
             </button>
           </div>
         </div>
@@ -150,4 +150,3 @@ export default function ChecklistDetail() {
     </div>
   );
 }
-
