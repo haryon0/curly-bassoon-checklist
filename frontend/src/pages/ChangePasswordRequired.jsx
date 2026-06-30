@@ -50,60 +50,58 @@ export default function ChangePasswordRequired() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#FCFAF5] flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        {/* Warning banner */}
+        <div className="mb-6 p-4 rounded-lg bg-amber-50 border border-amber-200">
+          <p className="text-sm text-amber-700 font-medium">⚠️ Ubah Password Diperlukan</p>
+          <p className="text-xs text-amber-600 mt-1">Silakan set password baru sebelum melanjutkan</p>
+        </div>
+
+        <div className="card p-8 shadow-lg">
           {/* Header */}
           <div className="text-center mb-8">
             <div className="text-4xl mb-3">🔐</div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Ubah Password</h1>
-            <p className="text-gray-600 text-sm">
+            <h1 className="h1-title mb-2">Ubah Password</h1>
+            <p className="body-text">
               Ini adalah login pertama Anda. Silakan ubah password untuk melanjutkan.
             </p>
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Password Baru *
-              </label>
+              <label className="label">Password Baru *</label>
               <input
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-600"
+                className="input"
                 placeholder="Minimal 8 karakter"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Konfirmasi Password *
-              </label>
+              <label className="label">Konfirmasi Password *</label>
               <input
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-600"
+                className="input"
                 placeholder="Ulangi password"
                 required
               />
             </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 disabled:opacity-50 font-medium"
-            >
+            <button type="submit" disabled={loading} className="btn-success w-full">
               {loading ? 'Mengubah...' : 'Ubah Password & Lanjutkan'}
             </button>
           </form>
 
           {/* Info */}
-          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-xs text-blue-800">
+          <div className="mt-6 p-4 bg-stone-100 border border-stone-200 rounded-lg">
+            <p className="text-xs text-stone-700">
               ℹ️ Password harus minimal 8 karakter untuk keamanan akun Anda.
             </p>
           </div>

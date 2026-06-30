@@ -32,16 +32,23 @@ export default function Register() {
   const set = (key) => (e) => setForm({ ...form, [key]: e.target.value });
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-8 bg-gray-50">
+    <div
+      className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#FCFAF5]"
+      style={{
+        backgroundImage: 'linear-gradient(135deg, #324720 0%, #D4A648 100%)',
+      }}
+    >
       <div className="w-full max-w-md">
-        <div className="card p-8">
-          <div className="mb-6">
-            <div className="w-10 h-10 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold text-sm mb-4">LT</div>
-            <h2 className="text-2xl font-bold text-gray-900">Buat Akun Baru</h2>
-            <p className="text-sm text-gray-500 mt-1">PT. Lombok Torok Developments</p>
+        <div className="card p-8 shadow-2xl">
+          <div className="mb-8 text-center">
+            <div className="w-12 h-12 rounded-lg bg-samara-primary flex items-center justify-center text-white font-bold text-lg mx-auto mb-4">
+              LT
+            </div>
+            <h1 className="h1-title mb-2">Buat Akun Baru</h1>
+            <p className="body-text">PT. Lombok Torok Developments</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="label">Nama Lengkap</label>
               <input type="text" className="input" placeholder="Nama lengkap Anda" value={form.full_name} onChange={set('full_name')} required />
@@ -64,17 +71,29 @@ export default function Register() {
               <label className="label">Konfirmasi Password</label>
               <input type="password" className="input" placeholder="Ulangi password" value={form.confirm_password} onChange={set('confirm_password')} required />
             </div>
-            <button type="submit" className="btn-primary w-full justify-center py-2.5 mt-2" disabled={loading}>
+            <button type="submit" className="btn-primary w-full" disabled={loading}>
               {loading ? (
                 <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />Mendaftar...</>
-              ) : 'Daftar'}
+              ) : (
+                'Daftar'
+              )}
             </button>
           </form>
 
-          <p className="mt-5 text-center text-sm text-gray-500">
-            Sudah punya akun?{' '}
-            <Link to="/login" className="text-brand-600 font-medium hover:underline">Masuk di sini</Link>
-          </p>
+          <div className="mt-6 text-center">
+            <p className="body-small">
+              Sudah punya akun?{' '}
+              <Link to="/login" className="text-link">
+                Masuk di sini
+              </Link>
+            </p>
+          </div>
+        </div>
+
+        {/* Brand info */}
+        <div className="mt-8 text-center text-white">
+          <p className="text-sm font-medium">PT. Lombok Torok Developments</p>
+          <p className="text-xs mt-1 opacity-75">Checklist Management System</p>
         </div>
       </div>
     </div>

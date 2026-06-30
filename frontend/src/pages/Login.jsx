@@ -23,30 +23,25 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex">
-      {/* Left panel */}
-      <div className="hidden lg:flex w-1/2 bg-brand-600 flex-col justify-between p-12">
-        <div>
-          <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center text-white font-bold text-xl">LT</div>
-        </div>
-        <div>
-          <h1 className="text-3xl font-bold text-white mb-3">MEP Checklist<br />Management System</h1>
-          <p className="text-brand-200 text-sm leading-relaxed">
-            Digitalisasi checklist maintenance MEP — dokumentasikan, foto, dan generate PDF laporan secara otomatis.
-          </p>
-        </div>
-        <div className="text-brand-300 text-xs">© 2024 PT. Lombok Torok Developments</div>
-      </div>
-
-      {/* Right panel */}
-      <div className="flex-1 flex items-center justify-center p-8 bg-gray-50">
-        <div className="w-full max-w-sm">
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900">Masuk ke Akun</h2>
-            <p className="text-sm text-gray-500 mt-1">Gunakan username atau email Anda</p>
+    <div
+      className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#FCFAF5]"
+      style={{
+        backgroundImage: 'linear-gradient(135deg, #324720 0%, #D4A648 100%)',
+      }}
+    >
+      <div className="w-full max-w-md">
+        <div className="card p-8 shadow-2xl">
+          {/* Header */}
+          <div className="mb-8 text-center">
+            <div className="w-12 h-12 rounded-lg bg-samara-primary flex items-center justify-center text-white font-bold text-lg mx-auto mb-4">
+              LT
+            </div>
+            <h1 className="h1-title mb-2">Masuk ke Akun</h1>
+            <p className="body-text">Gunakan username atau email Anda</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="label">Username / Email</label>
               <input
@@ -59,6 +54,7 @@ export default function Login() {
                 autoFocus
               />
             </div>
+
             <div>
               <label className="label">Password</label>
               <input
@@ -70,27 +66,39 @@ export default function Login() {
                 required
               />
             </div>
-            <button type="submit" className="btn-primary w-full justify-center py-2.5" disabled={loading}>
+
+            <button type="submit" className="btn-primary w-full" disabled={loading}>
               {loading ? (
                 <>
                   <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                   Memproses...
                 </>
-              ) : 'Masuk'}
+              ) : (
+                'Masuk'
+              )}
             </button>
           </form>
 
-          <p className="mt-6 text-center text-sm text-gray-500">
-            Belum punya akun?{' '}
-            <Link to="/register" className="text-brand-600 font-medium hover:underline">
-              Daftar sekarang
-            </Link>
-          </p>
-
-          <div className="mt-6 p-3 bg-blue-50 rounded-lg border border-blue-200">
-            <p className="text-xs text-blue-700 font-medium">Demo Admin:</p>
-            <p className="text-xs text-blue-600">Username: admin · Password: Admin@1234</p>
+          {/* Footer */}
+          <div className="mt-6 text-center">
+            <p className="body-small">
+              Belum punya akun?{' '}
+              <Link to="/register" className="text-link">
+                Daftar sekarang
+              </Link>
+            </p>
           </div>
+
+          <div className="mt-6 p-3 bg-amber-50 rounded-lg border border-amber-200">
+            <p className="text-xs text-amber-700 font-medium">Demo Admin:</p>
+            <p className="text-xs text-amber-600">Username: admin · Password: Admin@1234</p>
+          </div>
+        </div>
+
+        {/* Brand info */}
+        <div className="mt-8 text-center text-white">
+          <p className="text-sm font-medium">PT. Lombok Torok Developments</p>
+          <p className="text-xs mt-1 opacity-75">Checklist Management System</p>
         </div>
       </div>
     </div>
