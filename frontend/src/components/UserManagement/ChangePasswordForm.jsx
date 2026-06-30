@@ -34,7 +34,7 @@ export default function ChangePasswordForm({ user, onSubmit, onClose }) {
         <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-stone-900">Ubah Password</h2>
           <button onClick={onClose} className="text-stone-500 hover:text-stone-900">
-            âœ•
+            ✕
           </button>
         </div>
 

@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 
 export default function UserList({
   users,
@@ -29,17 +29,17 @@ export default function UserList({
 
   const getRoleBadge = (role) => {
     return role === 'admin' ? (
-      <span className="badge-admin">ðŸ‘¤ Admin</span>
+      <span className="badge-admin">👤 Admin</span>
     ) : (
-      <span className="badge-user">ðŸ‘¤ User</span>
+      <span className="badge-user">👤 User</span>
     );
   };
 
   const getStatusBadge = (isActive) => {
     return isActive ? (
-      <span className="badge-completed">âœ“ Aktif</span>
+      <span className="badge-completed">✔ Aktif</span>
     ) : (
-      <span className="badge-failed">âœ— Nonaktif</span>
+      <span className="badge-failed">✗ Nonaktif</span>
     );
   };
 
@@ -92,7 +92,7 @@ export default function UserList({
         <div className="p-8 text-center text-stone-400 text-sm">Memuat...</div>
       ) : users.length === 0 ? (
         <div className="p-12 text-center">
-          <div className="text-4xl mb-3">ðŸ‘¥</div>
+          <div className="text-4xl mb-3">👥</div>
           <p className="text-stone-500 text-sm">Tidak ada user yang ditemukan</p>
         </div>
       ) : (
@@ -153,7 +153,7 @@ export default function UserList({
               onClick={() => onPageChange(page - 1)}
               className="px-3 py-2 border border-stone-200 rounded text-sm disabled:opacity-50"
             >
-              â† Sebelumnya
+              ← Sebelumnya
             </button>
             <span className="px-3 py-2 text-sm">
               {page} / {totalPages}
@@ -163,7 +163,7 @@ export default function UserList({
               onClick={() => onPageChange(page + 1)}
               className="px-3 py-2 border border-stone-200 rounded text-sm disabled:opacity-50"
             >
-              Selanjutnya â†’
+              Selanjutnya →
             </button>
           </div>
         </div>
@@ -171,4 +171,3 @@ export default function UserList({
     </div>
   );
 }
-

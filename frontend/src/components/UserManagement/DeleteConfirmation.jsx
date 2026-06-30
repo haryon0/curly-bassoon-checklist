@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 
 export default function DeleteConfirmation({ user, onConfirm, onCancel, disabledReason }) {
   const [loading, setLoading] = useState(false);
@@ -37,7 +37,7 @@ export default function DeleteConfirmation({ user, onConfirm, onCancel, disabled
                 Yakin ingin menghapus user <strong>{user?.username}</strong>?
               </div>
               <div className="bg-red-50 border border-red-200 rounded px-4 py-3">
-                <p className="text-sm text-red-800">âš ï¸ Tindakan ini tidak dapat dibatalkan!</p>
+                <p className="text-sm text-red-800">⚠️ Tindakan ini tidak dapat dibatalkan!</p>
               </div>
             </>
           )}
@@ -65,4 +65,3 @@ export default function DeleteConfirmation({ user, onConfirm, onCancel, disabled
     </div>
   );
 }
-

@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 export default function UserForm({
@@ -93,7 +93,7 @@ export default function UserForm({
             {isEdit ? 'Edit User' : 'Buat User Baru'}
           </h2>
           <button onClick={onClose} className="text-stone-500 hover:text-stone-900">
-            âœ•
+            ✕
           </button>
         </div>
 
@@ -101,7 +101,7 @@ export default function UserForm({
         {tempPassword && (
           <div className="px-6 pt-4">
             <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-              <div className="text-sm font-semibold text-green-900 mb-2">âœ“ User dibuat berhasil!</div>
+              <div className="text-sm font-semibold text-green-900 mb-2">✔ User dibuat berhasil!</div>
               <div className="text-xs text-green-800 mb-3">
                 Password sementara (share dengan user, hanya ditampilkan sekali):
               </div>
@@ -111,7 +111,7 @@ export default function UserForm({
                   onClick={() => copyToClipboard(tempPassword)}
                   className="text-green-600 hover:text-green-900 ml-2"
                 >
-                  ðŸ“‹
+                  📋
                 </button>
               </div>
               <button
@@ -199,7 +199,7 @@ export default function UserForm({
                   onClick={onOpenChangePassword}
                   className="flex-1 px-4 py-2 border border-stone-200 text-stone-700 rounded-lg hover:bg-stone-50"
                 >
-                  ðŸ”‘ Ubah Password
+                  🔐 Ubah Password
                 </button>
               )}
               <button
@@ -223,4 +223,3 @@ export default function UserForm({
     </div>
   );
 }
-
