@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { checklistAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import UserManagementTab from '../components/UserManagement/UserManagementTab';
@@ -27,10 +27,17 @@ const StatusBadge = ({ status }) => {
 };
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard');
+
+  useEffect(() => {
+    if (user?.password_reset_required) {
+      navigate('/change-password');
+    }
+  }, [user?.password_reset_required, navigate]);
 
   useEffect(() => {
     checklistAPI.stats()
