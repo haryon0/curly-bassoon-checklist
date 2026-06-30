@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { checklistAPI } from '../services/api';
@@ -65,7 +65,9 @@ export default function History() {
           <h1 className="text-2xl font-bold text-stone-900">History Checklist</h1>
           <p className="text-sm text-stone-500 mt-1">Total: {pagination.total} checklist</p>
         </div>
-        <Link to="/checklist/new" className="btn-primary">âž• New Checklist</Link>
+        <Link to="/checklist/new" className="btn-primary">
+          <span className="material-symbols-rounded">add</span> New Checklist
+        </Link>
       </div>
 
       <div className="card">
@@ -73,7 +75,7 @@ export default function History() {
           <div className="p-12 text-center text-stone-400 text-sm">Memuat...</div>
         ) : checklists.length === 0 ? (
           <div className="p-12 text-center">
-            <div className="text-4xl mb-3">ðŸ“‹</div>
+            <div className="text-4xl mb-3">📋</div>
             <p className="text-stone-500 text-sm mb-4">Belum ada checklist</p>
             <Link to="/checklist/new" className="btn-primary">Buat Checklist Pertama</Link>
           </div>
@@ -109,7 +111,7 @@ export default function History() {
                     <div className="flex items-center gap-2 sm:hidden mb-3">
                       <StatusBadge status={item.status} />
                       <span className="text-xs text-stone-400">{item.photo_count} foto</span>
-                      <span className="text-xs text-stone-400">Â· {item.template_code}</span>
+                      <span className="text-xs text-stone-400">· {item.template_code}</span>
                     </div>
 
                     {/* Actions */}
@@ -121,8 +123,9 @@ export default function History() {
                         <button
                           onClick={() => handleDownload(item.id, item.result_pdf_filename || `checklist_${item.id}.pdf`)}
                           className="text-xs px-2.5 py-1.5 rounded-lg border border-brand-200 text-samara-accent hover:bg-brand-50 transition-colors"
+                          title="Download PDF"
                         >
-                          ðŸ“¥
+                          📥
                         </button>
                       )}
                       <button
@@ -130,7 +133,7 @@ export default function History() {
                         disabled={deleting === item.id}
                         className="text-xs px-2.5 py-1.5 rounded-lg border border-red-200 text-red-500 hover:bg-red-50 transition-colors disabled:opacity-50"
                       >
-                        {deleting === item.id ? '...' : 'ðŸ—‘'}
+                        {deleting === item.id ? '...' : '🗑️'}
                       </button>
                     </div>
                   </div>
@@ -149,12 +152,12 @@ export default function History() {
                     onClick={() => load(pagination.page - 1)}
                     disabled={pagination.page <= 1}
                     className="btn-secondary text-sm py-1.5 px-3 disabled:opacity-40"
-                  >â† Prev</button>
+                  >← Prev</button>
                   <button
                     onClick={() => load(pagination.page + 1)}
                     disabled={pagination.page >= pagination.pages}
                     className="btn-secondary text-sm py-1.5 px-3 disabled:opacity-40"
-                  >Next â†’</button>
+                  >Next →</button>
                 </div>
               </div>
             )}
@@ -164,4 +167,3 @@ export default function History() {
     </div>
   );
 }
-
