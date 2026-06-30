@@ -1,17 +1,17 @@
-﻿import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { templatesAPI, checklistAPI } from '../services/api';
 
-// â”€â”€â”€ Annotation Tools â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Annotation Tools ───────────────────────────────────────────
 const TOOLS = [
-  { id: 'checkmark', label: 'Checkmark', icon: 'âœ“', color: '#16a34a' },
-  { id: 'crossmark', label: 'Crossmark', icon: 'âœ—', color: '#dc2626' },
+  { id: 'checkmark', label: 'Checkmark', icon: '✔', color: '#16a34a' },
+  { id: 'crossmark', label: 'Crossmark', icon: '✗', color: '#dc2626' },
   { id: 'text',      label: 'Type Text', icon: 'A',  color: '#1d4ed8' },
-  { id: 'dot',       label: 'Dot',       icon: 'â—',  color: '#111827' },
-  { id: 'circle',    label: 'Circle',    icon: 'â—‹',  color: '#d97706' },
-  { id: 'crossout',  label: 'Cross Out', icon: 'â€”',  color: '#7c3aed' },
-  { id: 'eraser',    label: 'Eraser',    icon: 'âŒ«',  color: '#6b7280' },
+  { id: 'dot',       label: 'Dot',       icon: '●',  color: '#111827' },
+  { id: 'circle',    label: 'Circle',    icon: '○',  color: '#d97706' },
+  { id: 'crossout',  label: 'Cross Out', icon: '—',  color: '#7c3aed' },
+  { id: 'eraser',    label: 'Eraser',    icon: '⌫',  color: '#6b7280' },
 ];
 
 const ANNOT_PT = 20; // px size for drawing on canvas
@@ -75,7 +75,7 @@ function drawAnnot(ctx, a, cw, ch) {
   ctx.restore();
 }
 
-// â”€â”€â”€ Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Component ──────────────────────────────────────────────────
 const MAX_PHOTOS = 20;
 const MAX_SIZE_MB = 5;
 
@@ -114,7 +114,7 @@ export default function ChecklistForm() {
   const [submitting, setSubmitting]       = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
-  // â”€â”€ Load template â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Load template ───────────────────────────────────────────────
   useEffect(() => {
     templatesAPI.getById(templateId)
       .then(({ data }) => {
@@ -124,7 +124,7 @@ export default function ChecklistForm() {
       .catch(() => { toast.error('Template tidak ditemukan'); navigate('/checklist/new'); });
   }, [templateId]);
 
-  // â”€â”€ Load PDF.js from CDN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Load PDF.js from CDN ────────────────────────────────────────
   useEffect(() => {
     if (window.pdfjsLib) { setPdfReady(true); return; }
     const s = document.createElement('script');
@@ -138,7 +138,7 @@ export default function ChecklistForm() {
     document.head.appendChild(s);
   }, []);
 
-  // â”€â”€ Fetch & load PDF bytes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Fetch & load PDF bytes ──────────────────────────────────────
   useEffect(() => {
     if (!pdfReady || !template?.has_pdf) return;
     const token = localStorage.getItem('token');
@@ -149,7 +149,7 @@ export default function ChecklistForm() {
       .catch(() => toast.error('Gagal memuat PDF template'));
   }, [pdfReady, template, templateId]);
 
-  // â”€â”€ Render PDF page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Render PDF page ─────────────────────────────────────────────
   const renderPage = useCallback(async (pageNum) => {
     if (!pdfDoc || !pdfCanvasRef.current || !containerRef.current) return;
     if (renderingRef.current) return;
@@ -180,7 +180,7 @@ export default function ChecklistForm() {
 
   useEffect(() => { renderPage(currentPage); }, [pdfDoc, currentPage, renderPage]);
 
-  // â”€â”€ Redraw annotations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Redraw annotations ──────────────────────────────────────────
   const redrawAnnotations = useCallback((pageNum, cw, ch) => {
     const canvas = annotCanvasRef.current;
     if (!canvas) return;
@@ -197,7 +197,7 @@ export default function ChecklistForm() {
     }
   }, [annotations, currentPage, redrawAnnotations]);
 
-  // â”€â”€ Canvas click handler â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Canvas click handler ────────────────────────────────────────
   const handleAnnotClick = useCallback((e) => {
     const canvas = annotCanvasRef.current;
     if (!canvas) return;
@@ -263,7 +263,7 @@ export default function ChecklistForm() {
     setAnnotations(prev => ({ ...prev, [currentPage]: [] }));
   };
 
-  // â”€â”€ Photos â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Photos ──────────────────────────────────────────────────────
   const addFiles = useCallback((files) => {
     const valid = [];
     for (const file of files) {
@@ -298,7 +298,7 @@ export default function ChecklistForm() {
     setPhotos(arr);
   };
 
-  // â”€â”€ Submit â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Submit ──────────────────────────────────────────────────────
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.title.trim()) return toast.error('Judul wajib diisi');
@@ -340,22 +340,22 @@ export default function ChecklistForm() {
       {/* Breadcrumb */}
       <div className="mb-4">
         <div className="flex items-center gap-2 text-sm text-stone-500 mb-1">
-          <span>New Checklist</span><span>â€º</span><span>Pilih Template</span><span>â€º</span>
+          <span>New Checklist</span><span>›</span><span>Pilih Template</span><span>›</span>
           <span className="text-stone-900 font-medium">Isi Form</span>
         </div>
         <h1 className="text-xl font-bold text-stone-900">
           {template.name}
-          <span className="text-stone-400 font-normal text-sm ml-2">â€” {template.code}</span>
+          <span className="text-stone-400 font-normal text-sm ml-2">— {template.code}</span>
         </h1>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
 
-        {/* â”€â”€ PDF Viewer â”€â”€ */}
+        {/* ── PDF Viewer ── */}
         <div className="card overflow-hidden">
           {/* Card header */}
           <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
-            <span className="text-sm font-semibold text-stone-700">ðŸ“„ Template PDF</span>
+            <span className="text-sm font-semibold text-stone-700">📄 Template PDF</span>
             {totalAnnotCount > 0 && (
               <span className="text-xs text-samara-accent bg-brand-50 px-2.5 py-0.5 rounded-full font-medium">
                 {totalAnnotCount} anotasi
@@ -387,11 +387,11 @@ export default function ChecklistForm() {
               <div className="flex-1" />
               <button type="button" onClick={undoLast}
                 className="text-xs px-2.5 py-1.5 rounded-lg border border-stone-200 hover:bg-stone-100 text-stone-500 font-medium">
-                â†© Undo
+                ↶ Undo
               </button>
               <button type="button" onClick={clearPage}
                 className="text-xs px-2.5 py-1.5 rounded-lg border border-red-200 hover:bg-red-50 text-red-500 font-medium">
-                ðŸ—‘ Hapus
+                🗑 Hapus
               </button>
             </div>
           )}
@@ -439,7 +439,7 @@ export default function ChecklistForm() {
               )
             ) : (
               <div className="flex flex-col items-center justify-center h-48 text-stone-400">
-                <div className="text-4xl mb-2">ðŸ“„</div>
+                <div className="text-4xl mb-2">📄</div>
                 <p className="text-sm">Template PDF belum diupload</p>
               </div>
             )}
@@ -452,7 +452,7 @@ export default function ChecklistForm() {
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                 disabled={currentPage <= 1}
                 className="btn-secondary text-sm py-1.5 px-3 disabled:opacity-40">
-                â† Prev
+                ← Prev
               </button>
               <span className="text-sm text-stone-600">
                 Halaman <strong>{currentPage}</strong> dari <strong>{totalPages}</strong>
@@ -461,13 +461,13 @@ export default function ChecklistForm() {
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                 disabled={currentPage >= totalPages}
                 className="btn-secondary text-sm py-1.5 px-3 disabled:opacity-40">
-                Next â†’
+                Next →
               </button>
             </div>
           )}
         </div>
 
-        {/* â”€â”€ Informasi Checklist â”€â”€ */}
+        {/* ── Informasi Checklist ── */}
         <div className="card p-5">
           <h2 className="font-semibold text-stone-900 mb-4">Informasi Checklist</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -496,7 +496,7 @@ export default function ChecklistForm() {
           </div>
         </div>
 
-        {/* â”€â”€ Foto Dokumentasi â”€â”€ */}
+        {/* ── Foto Dokumentasi ── */}
         <div className="card p-5">
           <div className="flex items-center justify-between mb-3">
             <h2 className="font-semibold text-stone-900">Foto Dokumentasi</h2>
@@ -512,7 +512,7 @@ export default function ChecklistForm() {
                 dragOver ? 'border-brand-500 bg-brand-50' : 'border-stone-300 hover:border-brand-400'
               }`}
             >
-              <div className="text-3xl mb-2">ðŸ“·</div>
+              <div className="text-3xl mb-2">📷</div>
               <p className="text-sm text-stone-600 mb-2">Drag & drop foto di sini, atau</p>
               <label className="btn-secondary text-xs cursor-pointer">
                 Pilih File
@@ -520,7 +520,7 @@ export default function ChecklistForm() {
                   onChange={e => { addFiles(Array.from(e.target.files)); e.target.value = ''; }} />
               </label>
               <p className="text-xs text-stone-400 mt-2">
-                JPEG, PNG, WebP Â· Maks. {MAX_SIZE_MB}MB per foto Â· Maks. {MAX_PHOTOS} foto
+                JPEG, PNG, WebP · Maks. {MAX_SIZE_MB}MB per foto · Maks. {MAX_PHOTOS} foto
               </p>
             </div>
           )}
@@ -532,11 +532,11 @@ export default function ChecklistForm() {
                   <img src={photo.preview} alt="" className="w-full aspect-square object-cover rounded-lg border border-stone-200" />
                   <div className="absolute top-1 right-1 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button type="button" onClick={() => movePhoto(idx, idx - 1)} disabled={idx === 0}
-                      className="w-5 h-5 bg-black/50 text-white rounded text-xs flex items-center justify-center disabled:opacity-30">â†‘</button>
+                      className="w-5 h-5 bg-black/50 text-white rounded text-xs flex items-center justify-center disabled:opacity-30">↑</button>
                     <button type="button" onClick={() => movePhoto(idx, idx + 1)} disabled={idx === photos.length - 1}
-                      className="w-5 h-5 bg-black/50 text-white rounded text-xs flex items-center justify-center disabled:opacity-30">â†“</button>
+                      className="w-5 h-5 bg-black/50 text-white rounded text-xs flex items-center justify-center disabled:opacity-30">↓</button>
                     <button type="button" onClick={() => removePhoto(idx)}
-                      className="w-5 h-5 bg-red-500 text-white rounded text-xs flex items-center justify-center">âœ•</button>
+                      className="w-5 h-5 bg-red-500 text-white rounded text-xs flex items-center justify-center">✕</button>
                   </div>
                   <span className="absolute top-1 left-1 text-xs bg-black/50 text-white px-1 rounded">{idx + 1}</span>
                   <input type="text" className="input text-xs py-1 mt-1.5" placeholder="Caption..."
@@ -549,10 +549,10 @@ export default function ChecklistForm() {
           )}
         </div>
 
-        {/* â”€â”€ Actions â”€â”€ */}
+        {/* ── Actions ── */}
         <div className="flex gap-3">
           <button type="button" onClick={() => navigate('/checklist/new')} className="btn-secondary flex-1 justify-center" disabled={submitting}>
-            â† Kembali
+            ← Kembali
           </button>
           <button type="submit" className="btn-primary flex-1 justify-center" disabled={submitting}>
             {submitting ? (
@@ -560,7 +560,7 @@ export default function ChecklistForm() {
                 <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 {uploadProgress < 100 ? `Upload ${uploadProgress}%` : 'Generate PDF...'}
               </div>
-            ) : 'ðŸ’¾ Simpan & Generate PDF'}
+            ) : '💾 Simpan & Generate PDF'}
           </button>
         </div>
 
@@ -579,4 +579,3 @@ export default function ChecklistForm() {
     </div>
   );
 }
-
