@@ -4,21 +4,25 @@ export default {
   theme: {
     extend: {
       colors: {
-        brand: {
-          50:  '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#1069a0',
-          700: '#0e5a8a',
-          800: '#0c4a72',
-          900: '#083a5a',
-        },
+        'samara-primary': '#324720',
+        'samara-accent': '#D4A648',
+        'samara-bg': '#FCFAF5',
+        'samara-text': '#1F1B16',
+        'samara-text-secondary': '#6B6259',
+        'samara-border': '#EDE5D2',
+      },
+      backgroundColor: {
+        DEFAULT: '#FCFAF5',
+      },
+      textColor: {
+        DEFAULT: '#1F1B16',
+      },
+      borderColor: {
+        DEFAULT: '#EDE5D2',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Aptos', 'Inter', 'system-ui', 'sans-serif'],
+        'material-symbols': ['Material Symbols Rounded'],
       },
     },
   },
