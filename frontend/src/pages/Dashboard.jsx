@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { checklistAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
-import UserManagementTab from '../components/UserManagement/UserManagementTab';
 
 const formatSize = (bytes) => {
   if (!bytes) return '-';
@@ -31,7 +30,6 @@ export default function Dashboard() {
   const { user } = useAuth();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('dashboard');
 
   useEffect(() => {
     if (user?.password_reset_required) {
@@ -56,8 +54,8 @@ export default function Dashboard() {
     </div>
   );
 
-  const DashboardContent = () => (
-    <>
+  return (
+    <div className="max-w-5xl">
       {/* Header */}
       <div className="mb-8 flex items-start justify-between">
         <div>
@@ -112,40 +110,6 @@ export default function Dashboard() {
           </div>
         )}
       </div>
-    </>
-  );
-
-  return (
-    <div className="max-w-7xl">
-      {/* Tab Navigation */}
-      <div className="mb-8 flex gap-4 border-b border-gray-100">
-        <button
-          onClick={() => setActiveTab('dashboard')}
-          className={`px-4 py-2 font-medium border-b-2 transition-colors ${
-            activeTab === 'dashboard'
-              ? 'border-brand-600 text-brand-600'
-              : 'border-transparent text-gray-600 hover:text-gray-900'
-          }`}
-        >
-          📊 Dashboard
-        </button>
-        {user?.role === 'admin' && (
-          <button
-            onClick={() => setActiveTab('admin')}
-            className={`px-4 py-2 font-medium border-b-2 transition-colors ${
-              activeTab === 'admin'
-                ? 'border-brand-600 text-brand-600'
-                : 'border-transparent text-gray-600 hover:text-gray-900'
-            }`}
-          >
-            👥 User Management
-          </button>
-        )}
-      </div>
-
-      {/* Tab Content */}
-      {activeTab === 'dashboard' && <DashboardContent />}
-      {activeTab === 'admin' && user?.role === 'admin' && <UserManagementTab />}
     </div>
   );
 }

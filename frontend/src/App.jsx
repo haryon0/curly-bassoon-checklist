@@ -16,6 +16,7 @@ import Success from './pages/Success';
 import History from './pages/History';
 import ChecklistDetail from './pages/ChecklistDetail';
 import AdminTemplates from './pages/AdminTemplates';
+import AdminUsers from './pages/AdminUsers';
 
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
             <Route path="/checklist/history" element={<History />} />
             <Route path="/checklist/:id" element={<ChecklistDetail />} />
             <Route path="/admin/templates" element={<AdminTemplates />} />
+            <Route path="/admin/users" element={<AdminUsers />} />
           </Route>
         </Route>
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
