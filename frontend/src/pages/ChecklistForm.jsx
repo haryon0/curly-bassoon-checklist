@@ -336,7 +336,7 @@ export default function ChecklistForm() {
   );
 
   return (
-    <div className="max-w-5xl">
+    <div>
       {/* Breadcrumb */}
       <div className="mb-4">
         <div className="flex items-center gap-2 text-sm text-gray-500 mb-1">

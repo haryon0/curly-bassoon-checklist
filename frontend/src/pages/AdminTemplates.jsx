@@ -106,7 +106,7 @@ export default function AdminTemplates() {
   };
 
   return (
-    <div className="max-w-5xl">
+    <div>
       <div className="mb-6">
         <div className="flex items-center justify-between">
           <div>

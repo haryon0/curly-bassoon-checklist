@@ -22,7 +22,7 @@ export default function TemplateSelect() {
   };
 
   return (
-    <div className="max-w-3xl">
+    <div>
       <div className="mb-6">
         <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
           <span>New Checklist</span>

@@ -55,7 +55,7 @@ export default function Dashboard() {
   );
 
   return (
-    <div className="max-w-5xl">
+    <div>
       {/* Header */}
       <div className="mb-8 flex items-start justify-between">
         <div>

@@ -63,7 +63,7 @@ export default function ChecklistDetail() {
   if (!checklist) return null;
 
   return (
-    <div className="max-w-3xl">
+    <div>
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-gray-500 mb-5">
         <Link to="/checklist/history" className="hover:text-brand-600">History</Link>
