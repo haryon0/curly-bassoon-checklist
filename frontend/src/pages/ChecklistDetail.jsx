@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { checklistAPI } from '../services/api';
@@ -65,10 +65,10 @@ export default function ChecklistDetail() {
   return (
     <div>
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm text-gray-500 mb-5">
-        <Link to="/checklist/history" className="hover:text-brand-600">History</Link>
-        <span>›</span>
-        <span className="text-gray-900 font-medium truncate max-w-xs">{checklist.title}</span>
+      <div className="flex items-center gap-2 text-sm text-stone-500 mb-5">
+        <Link to="/checklist/history" className="hover:text-samara-accent">History</Link>
+        <span>â€º</span>
+        <span className="text-stone-900 font-medium truncate max-w-xs">{checklist.title}</span>
       </div>
 
       {/* Header card */}
@@ -76,17 +76,17 @@ export default function ChecklistDetail() {
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-3 mb-1">
-              <h1 className="text-xl font-bold text-gray-900">{checklist.title}</h1>
+              <h1 className="text-xl font-bold text-stone-900">{checklist.title}</h1>
               <StatusBadge status={checklist.status} />
             </div>
-            <p className="text-sm text-gray-500">{checklist.template_name} · {checklist.template_code}</p>
+            <p className="text-sm text-stone-500">{checklist.template_name} Â· {checklist.template_code}</p>
           </div>
           <div className="flex items-center gap-2 shrink-0">
             {checklist.status === 'completed' && (
-              <button onClick={handleDownload} className="btn-primary text-sm py-2">📥 Download PDF</button>
+              <button onClick={handleDownload} className="btn-primary text-sm py-2">ðŸ“¥ Download PDF</button>
             )}
             <button onClick={handleDelete} disabled={deleting} className="btn-danger text-sm py-2">
-              {deleting ? '...' : '🗑 Hapus'}
+              {deleting ? '...' : 'ðŸ—‘ Hapus'}
             </button>
           </div>
         </div>
@@ -95,7 +95,7 @@ export default function ChecklistDetail() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
         {/* Details */}
         <div className="card p-5">
-          <h2 className="font-semibold text-gray-900 mb-4 text-sm">Informasi Checklist</h2>
+          <h2 className="font-semibold text-stone-900 mb-4 text-sm">Informasi Checklist</h2>
           <dl className="space-y-3">
             {[
               ['Dibuat oleh', checklist.full_name],
@@ -106,8 +106,8 @@ export default function ChecklistDetail() {
               ['Jumlah Foto', `${photos.length} foto`],
             ].map(([key, val]) => (
               <div key={key} className="flex justify-between text-sm gap-3">
-                <dt className="text-gray-500 shrink-0">{key}</dt>
-                <dd className="font-medium text-gray-900 text-right">{val}</dd>
+                <dt className="text-stone-500 shrink-0">{key}</dt>
+                <dd className="font-medium text-stone-900 text-right">{val}</dd>
               </div>
             ))}
           </dl>
@@ -115,11 +115,11 @@ export default function ChecklistDetail() {
 
         {/* Notes */}
         <div className="card p-5">
-          <h2 className="font-semibold text-gray-900 mb-3 text-sm">Catatan / Remarks</h2>
+          <h2 className="font-semibold text-stone-900 mb-3 text-sm">Catatan / Remarks</h2>
           {checklist.notes ? (
-            <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">{checklist.notes}</p>
+            <p className="text-sm text-stone-700 leading-relaxed whitespace-pre-wrap">{checklist.notes}</p>
           ) : (
-            <p className="text-sm text-gray-400 italic">Tidak ada catatan</p>
+            <p className="text-sm text-stone-400 italic">Tidak ada catatan</p>
           )}
         </div>
       </div>
@@ -127,22 +127,22 @@ export default function ChecklistDetail() {
       {/* Photos */}
       {photos.length > 0 && (
         <div className="card p-5">
-          <h2 className="font-semibold text-gray-900 mb-4 text-sm">Foto Dokumentasi ({photos.length})</h2>
+          <h2 className="font-semibold text-stone-900 mb-4 text-sm">Foto Dokumentasi ({photos.length})</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {photos.map((photo, idx) => (
-              <div key={photo.id} className="rounded-lg overflow-hidden border border-gray-200">
-                <div className="aspect-square bg-gray-100 flex items-center justify-center">
-                  <span className="text-gray-400 text-sm">Foto {idx + 1}</span>
+              <div key={photo.id} className="rounded-lg overflow-hidden border border-stone-200">
+                <div className="aspect-square bg-stone-100 flex items-center justify-center">
+                  <span className="text-stone-400 text-sm">Foto {idx + 1}</span>
                 </div>
                 {photo.photo_caption && (
-                  <div className="px-2 py-1.5 bg-gray-50 border-t border-gray-200">
-                    <p className="text-xs text-gray-600 line-clamp-2">{photo.photo_caption}</p>
+                  <div className="px-2 py-1.5 bg-stone-50 border-t border-stone-200">
+                    <p className="text-xs text-stone-600 line-clamp-2">{photo.photo_caption}</p>
                   </div>
                 )}
               </div>
             ))}
           </div>
-          <p className="text-xs text-gray-400 mt-3">
+          <p className="text-xs text-stone-400 mt-3">
             * Preview foto tidak tersedia di browser untuk alasan keamanan. Foto sudah termasuk di dalam PDF yang didownload.
           </p>
         </div>
@@ -150,3 +150,4 @@ export default function ChecklistDetail() {
     </div>
   );
 }
+

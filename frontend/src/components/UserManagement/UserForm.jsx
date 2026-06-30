@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 export default function UserForm({
@@ -89,11 +89,11 @@ export default function UserForm({
       <div className="bg-white rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="sticky top-0 bg-white px-6 py-4 border-b border-gray-100 flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-900">
+          <h2 className="text-lg font-semibold text-stone-900">
             {isEdit ? 'Edit User' : 'Buat User Baru'}
           </h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-900">
-            ✕
+          <button onClick={onClose} className="text-stone-500 hover:text-stone-900">
+            âœ•
           </button>
         </div>
 
@@ -101,7 +101,7 @@ export default function UserForm({
         {tempPassword && (
           <div className="px-6 pt-4">
             <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-              <div className="text-sm font-semibold text-green-900 mb-2">✓ User dibuat berhasil!</div>
+              <div className="text-sm font-semibold text-green-900 mb-2">âœ“ User dibuat berhasil!</div>
               <div className="text-xs text-green-800 mb-3">
                 Password sementara (share dengan user, hanya ditampilkan sekali):
               </div>
@@ -111,7 +111,7 @@ export default function UserForm({
                   onClick={() => copyToClipboard(tempPassword)}
                   className="text-green-600 hover:text-green-900 ml-2"
                 >
-                  📋
+                  ðŸ“‹
                 </button>
               </div>
               <button
@@ -130,12 +130,12 @@ export default function UserForm({
             {/* Username - only on create */}
             {!isEdit && (
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Username *</label>
+                <label className="block text-sm font-medium text-stone-700 mb-1">Username *</label>
                 <input
                   type="text"
                   value={formData.username}
                   onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-brand-600"
+                  className="w-full px-3 py-2 border border-stone-200 rounded-lg focus:outline-none focus:border-brand-600"
                   placeholder="john_doe"
                 />
               </div>
@@ -143,35 +143,35 @@ export default function UserForm({
 
             {/* Full Name */}
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap *</label>
+              <label className="block text-sm font-medium text-stone-700 mb-1">Nama Lengkap *</label>
               <input
                 type="text"
                 value={formData.full_name}
                 onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-brand-600"
+                className="w-full px-3 py-2 border border-stone-200 rounded-lg focus:outline-none focus:border-brand-600"
                 placeholder="John Doe"
               />
             </div>
 
             {/* Email */}
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+              <label className="block text-sm font-medium text-stone-700 mb-1">Email *</label>
               <input
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-brand-600"
+                className="w-full px-3 py-2 border border-stone-200 rounded-lg focus:outline-none focus:border-brand-600"
                 placeholder="john@example.com"
               />
             </div>
 
             {/* Role */}
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+              <label className="block text-sm font-medium text-stone-700 mb-1">Role</label>
               <select
                 value={formData.role}
                 onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-brand-600"
+                className="w-full px-3 py-2 border border-stone-200 rounded-lg focus:outline-none focus:border-brand-600"
               >
                 <option value="user">User</option>
                 <option value="admin">Admin</option>
@@ -187,7 +187,7 @@ export default function UserForm({
                   onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
                   className="rounded"
                 />
-                <span className="text-sm font-medium text-gray-700">Aktif</span>
+                <span className="text-sm font-medium text-stone-700">Aktif</span>
               </label>
             </div>
 
@@ -197,22 +197,22 @@ export default function UserForm({
                 <button
                   type="button"
                   onClick={onOpenChangePassword}
-                  className="flex-1 px-4 py-2 border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50"
+                  className="flex-1 px-4 py-2 border border-stone-200 text-stone-700 rounded-lg hover:bg-stone-50"
                 >
-                  🔑 Ubah Password
+                  ðŸ”‘ Ubah Password
                 </button>
               )}
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 px-4 py-2 border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50"
+                className="flex-1 px-4 py-2 border border-stone-200 text-stone-700 rounded-lg hover:bg-stone-50"
               >
                 Batal
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 disabled:opacity-50"
+                className="flex-1 px-4 py-2 bg-samara-primary text-white rounded-lg hover:bg-samara-primary disabled:opacity-50"
               >
                 {loading ? 'Menyimpan...' : isEdit ? 'Simpan' : 'Buat'}
               </button>
@@ -223,3 +223,4 @@ export default function UserForm({
     </div>
   );
 }
+
