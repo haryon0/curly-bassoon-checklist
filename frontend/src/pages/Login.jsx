@@ -36,10 +36,11 @@ export default function Login() {
             <img
               src="/samara-logo.png"
               alt="Samara Lombok"
-              className="h-12 mx-auto mb-4"
+              className="h-14 w-auto mx-auto mb-4 object-contain"
+              style={{ maxWidth: '200px' }}
             />
-            <h1 className="h1-title mb-2">Masuk ke Akun</h1>
-            <p className="body-text">Gunakan username atau email Anda</p>
+            <h1 className="text-2xl font-bold text-stone-900 mb-2">Masuk ke Akun</h1>
+            <p className="text-sm text-stone-600">Gunakan username atau email Anda</p>
           </div>
 
           {/* Form */}

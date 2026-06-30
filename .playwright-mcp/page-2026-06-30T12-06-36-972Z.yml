@@ -1,0 +1,24 @@
+- generic [ref=f4e4]:
+  - generic [ref=f4e5]:
+    - generic [ref=f4e6]:
+      - img "Samara Lombok" [ref=f4e7]
+      - heading "Masuk ke Akun" [level=1] [ref=f4e8]
+      - paragraph [ref=f4e9]: Gunakan username atau email Anda
+    - generic [ref=f4e10]:
+      - generic [ref=f4e11]:
+        - generic [ref=f4e12]: Username / Email
+        - textbox "Masukkan username atau email" [active] [ref=f4e13]
+      - generic [ref=f4e14]:
+        - generic [ref=f4e15]: Password
+        - textbox "Masukkan password" [ref=f4e16]
+      - button "Masuk" [ref=f4e17] [cursor=pointer]
+    - paragraph [ref=f4e19]:
+      - text: Belum punya akun?
+      - link "Daftar sekarang" [ref=f4e20] [cursor=pointer]:
+        - /url: /register
+    - generic [ref=f4e21]:
+      - paragraph [ref=f4e22]: "Demo Admin:"
+      - paragraph [ref=f4e23]: "Username: admin · Password: Admin@1234"
+  - generic [ref=f4e24]:
+    - paragraph [ref=f4e25]: Samara Lombok
+    - paragraph [ref=f4e26]: Checklist Management System
