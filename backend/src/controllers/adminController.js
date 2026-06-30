@@ -146,8 +146,80 @@ const createUser = async (req, res) => {
   }
 };
 
+// PUT /api/admin/users/:id - Update user details
+const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { full_name, email, role, is_active } = req.body;
+
+    // Get current user
+    const userResult = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
+    if (userResult.rows.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const currentUser = userResult.rows[0];
+
+    // Build update query dynamically
+    const updates = [];
+    const params = [];
+    let paramCount = 1;
+
+    if (full_name !== undefined) {
+      if (full_name.length > 100) {
+        return res.status(400).json({ error: 'Full name must be 100 characters or less' });
+      }
+      updates.push(`full_name = $${paramCount}`);
+      params.push(full_name);
+      paramCount++;
+    }
+
+    if (email !== undefined) {
+      const existing = await pool.query(
+        'SELECT id FROM users WHERE email = $1 AND id != $2',
+        [email.toLowerCase(), id]
+      );
+      if (existing.rows.length > 0) {
+        return res.status(409).json({ error: 'Email already in use' });
+      }
+      updates.push(`email = $${paramCount}`);
+      params.push(email.toLowerCase());
+      paramCount++;
+    }
+
+    if (role !== undefined) {
+      if (!['user', 'admin'].includes(role)) {
+        return res.status(400).json({ error: 'Role must be user or admin' });
+      }
+      updates.push(`role = $${paramCount}`);
+      params.push(role);
+      paramCount++;
+    }
+
+    if (is_active !== undefined) {
+      updates.push(`is_active = $${paramCount}`);
+      params.push(is_active);
+      paramCount++;
+    }
+
+    if (updates.length === 0) {
+      return res.status(400).json({ error: 'No fields to update' });
+    }
+
+    params.push(id);
+    const query = `UPDATE users SET ${updates.join(', ')} WHERE id = $${paramCount} RETURNING id, username, email, full_name, role, is_active, created_at, last_login`;
+
+    const result = await pool.query(query, params);
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Update user error:', error);
+    res.status(500).json({ error: 'Failed to update user' });
+  }
+};
+
 module.exports = {
   listUsers,
   getUser,
   createUser,
+  updateUser,
 };
