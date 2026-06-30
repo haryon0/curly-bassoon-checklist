@@ -84,7 +84,70 @@ const getUser = async (req, res) => {
   }
 };
 
+// POST /api/admin/users - Create new user
+const createUser = async (req, res) => {
+  try {
+    const { username, email, full_name, role = 'user' } = req.body;
+
+    // Validation
+    if (!username || !email || !full_name) {
+      return res.status(400).json({ error: 'Username, email, and full_name are required' });
+    }
+
+    if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+      return res.status(400).json({ error: 'Username may only contain letters, numbers, and underscores' });
+    }
+
+    if (username.length < 3 || username.length > 20) {
+      return res.status(400).json({ error: 'Username must be 3-20 characters' });
+    }
+
+    if (full_name.length > 100) {
+      return res.status(400).json({ error: 'Full name must be 100 characters or less' });
+    }
+
+    if (!['user', 'admin'].includes(role)) {
+      return res.status(400).json({ error: 'Role must be user or admin' });
+    }
+
+    // Check if email/username already exists
+    const existing = await pool.query(
+      'SELECT id FROM users WHERE email = $1 OR username = $2',
+      [email.toLowerCase(), username.toLowerCase()]
+    );
+
+    if (existing.rows.length > 0) {
+      return res.status(409).json({ error: 'Email or username already registered' });
+    }
+
+    // Generate temporary password
+    const tempPassword = generateTemporaryPassword();
+    const passwordHash = await bcrypt.hash(tempPassword, 10);
+
+    // Create user
+    const result = await pool.query(
+      `INSERT INTO users (username, email, password_hash, full_name, role, is_active, password_reset_required)
+       VALUES ($1, $2, $3, $4, $5, true, true)
+       RETURNING id, username, email, full_name, role, is_active, created_at`,
+      [username.toLowerCase(), email.toLowerCase(), passwordHash, full_name, role]
+    );
+
+    const user = result.rows[0];
+
+    res.status(201).json({
+      ...user,
+      temporary_password: tempPassword,
+      password_reset_required: true,
+      message: 'User created successfully. Share the temporary password with the user.',
+    });
+  } catch (error) {
+    console.error('Create user error:', error);
+    res.status(500).json({ error: 'Failed to create user' });
+  }
+};
+
 module.exports = {
   listUsers,
   getUser,
+  createUser,
 };
