@@ -217,9 +217,75 @@ const updateUser = async (req, res) => {
   }
 };
 
+// PUT /api/admin/users/:id/password - Change user password
+const changePassword = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { new_password } = req.body;
+
+    if (!new_password || new_password.length < 8) {
+      return res.status(400).json({ error: 'Password must be at least 8 characters' });
+    }
+
+    const userResult = await pool.query('SELECT id FROM users WHERE id = $1', [id]);
+    if (userResult.rows.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const passwordHash = await bcrypt.hash(new_password, 10);
+
+    await pool.query(
+      'UPDATE users SET password_hash = $1, password_reset_required = false WHERE id = $2',
+      [passwordHash, id]
+    );
+
+    res.json({ message: 'Password changed successfully', password_reset_required: false });
+  } catch (error) {
+    console.error('Change password error:', error);
+    res.status(500).json({ error: 'Failed to change password' });
+  }
+};
+
+// DELETE /api/admin/users/:id - Delete user
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const adminId = req.user.id; // From authenticated request
+
+    // Cannot delete self
+    if (parseInt(id) === adminId) {
+      return res.status(403).json({ error: 'Cannot delete your own account' });
+    }
+
+    // Get user to check role
+    const userResult = await pool.query('SELECT role FROM users WHERE id = $1', [id]);
+    if (userResult.rows.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Check if this is the last admin
+    if (userResult.rows[0].role === 'admin') {
+      const adminCount = await pool.query('SELECT COUNT(*) FROM users WHERE role = $1', ['admin']);
+      if (parseInt(adminCount.rows[0].count) <= 1) {
+        return res.status(403).json({ error: 'Cannot delete the last admin user' });
+      }
+    }
+
+    // Delete user
+    await pool.query('DELETE FROM users WHERE id = $1', [id]);
+
+    res.json({ message: 'User deleted successfully' });
+  } catch (error) {
+    console.error('Delete user error:', error);
+    res.status(500).json({ error: 'Failed to delete user' });
+  }
+};
+
 module.exports = {
   listUsers,
   getUser,
   createUser,
   updateUser,
+  changePassword,
+  deleteUser,
 };
