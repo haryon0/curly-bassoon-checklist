@@ -13,7 +13,7 @@ const NavItem = ({ to, icon, label }) => (
       }`
     }
   >
-    <span className="text-lg">{icon}</span>
+    <span className="material-symbols-rounded text-lg">{icon}</span>
     {label}
   </NavLink>
 );
@@ -33,24 +33,24 @@ export default function Layout() {
       {/* Logo */}
       <div className="px-4 py-5 border-b border-samara-border">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-samara-primary flex items-center justify-center text-white font-bold text-sm">LT</div>
+          <div className="w-9 h-9 rounded-lg bg-samara-primary flex items-center justify-center text-white font-bold text-sm">SL</div>
           <div>
             <div className="font-semibold text-stone-900 text-sm leading-tight">Checklist System</div>
-            <div className="text-xs text-stone-500">PT. Lombok Torok Dev</div>
+            <div className="text-xs text-stone-500">Samara Lombok</div>
           </div>
         </div>
       </div>
 
       {/* Nav */}
       <nav className="flex-1 px-3 py-4 space-y-1">
-        <NavItem to="/dashboard" icon="📊" label="Dashboard" />
-        <NavItem to="/checklist/new" icon="➕" label="New Checklist" />
-        <NavItem to="/checklist/history" icon="📋" label="History" />
+        <NavItem to="/dashboard" icon="dashboard" label="Dashboard" />
+        <NavItem to="/checklist/new" icon="add" label="New Checklist" />
+        <NavItem to="/checklist/history" icon="description" label="History" />
         {user?.role === 'admin' && (
           <>
             <div className="pt-3 pb-1 px-3 text-xs font-semibold text-stone-400 uppercase tracking-wider">Admin</div>
-            <NavItem to="/admin/templates" icon="📄" label="Upload Template" />
-            <NavItem to="/admin/users" icon="👥" label="User Management" />
+            <NavItem to="/admin/templates" icon="upload_file" label="Upload Template" />
+            <NavItem to="/admin/users" icon="group" label="User Management" />
           </>
         )}
       </nav>
@@ -70,7 +70,7 @@ export default function Layout() {
           onClick={handleLogout}
           className="mt-2 w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
         >
-          🚪 Logout
+          <span className="material-symbols-rounded text-base">logout</span> Logout
         </button>
       </div>
     </div>
@@ -98,7 +98,7 @@ export default function Layout() {
         {/* Mobile topbar */}
         <header className="lg:hidden flex items-center gap-3 px-4 py-3 bg-white border-b border-samara-border">
           <button onClick={() => setSidebarOpen(true)} className="p-1.5 rounded-lg hover:bg-stone-100">
-            ☰
+            <span className="material-symbols-rounded">menu</span>
           </button>
           <span className="font-semibold text-stone-900 text-sm">Checklist System</span>
         </header>

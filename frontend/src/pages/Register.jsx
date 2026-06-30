@@ -32,20 +32,22 @@ export default function Register() {
   const set = (key) => (e) => setForm({ ...form, [key]: e.target.value });
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center px-4 py-12 bg-[#FCFAF5]"
-      style={{
-        backgroundImage: 'linear-gradient(135deg, #324720 0%, #D4A648 100%)',
-      }}
-    >
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-white">
       <div className="w-full max-w-md">
-        <div className="card p-8 shadow-2xl">
+        <div
+          className="p-8 rounded-xl border border-stone-200 shadow-lg"
+          style={{
+            background: 'linear-gradient(135deg, #FFFFFF 0%, #FFFBF7 100%)',
+          }}
+        >
           <div className="mb-8 text-center">
-            <div className="w-12 h-12 rounded-lg bg-samara-primary flex items-center justify-center text-white font-bold text-lg mx-auto mb-4">
-              LT
-            </div>
+            <img
+              src="/samara-logo.png"
+              alt="Samara Lombok"
+              className="h-12 mx-auto mb-4"
+            />
             <h1 className="h1-title mb-2">Buat Akun Baru</h1>
-            <p className="body-text">PT. Lombok Torok Developments</p>
+            <p className="body-text">Samara Lombok</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -91,8 +93,8 @@ export default function Register() {
         </div>
 
         {/* Brand info */}
-        <div className="mt-8 text-center text-white">
-          <p className="text-sm font-medium">PT. Lombok Torok Developments</p>
+        <div className="mt-8 text-center text-stone-600">
+          <p className="text-sm font-medium">Samara Lombok</p>
           <p className="text-xs mt-1 opacity-75">Checklist Management System</p>
         </div>
       </div>
