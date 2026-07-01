@@ -1,3 +1,6 @@
+# Dependencies
+node_modules/
+
 # Playwright MCP verification artifacts
 .playwright-mcp/
 
