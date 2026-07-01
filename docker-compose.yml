@@ -1,0 +1,20 @@
+services:
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    volumes:
+      # Persist uploaded photos and generated PDFs across restarts
+      - ./data/uploads:/app/uploads
+      - ./data/generated:/app/generated
+    expose:
+      - "5000"
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
