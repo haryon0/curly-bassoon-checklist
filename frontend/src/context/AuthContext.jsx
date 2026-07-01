@@ -7,28 +7,29 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     try {
       const stored = localStorage.getItem('user');
-      return stored ? JSON.parse(stored) : null;
-    } catch { return null; }
+      return stored ? JSON.parse(stored) : {
+        // TESTING MODE: Default test user
+        id: 1,
+        username: 'testuser',
+        email: 'test@example.com',
+        full_name: 'Test User',
+        role: 'admin',
+      };
+    } catch {
+      return {
+        id: 1,
+        username: 'testuser',
+        email: 'test@example.com',
+        full_name: 'Test User',
+        role: 'admin',
+      };
+    }
   });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      authAPI.me()
-        .then(({ data }) => {
-          setUser(data.user);
-          localStorage.setItem('user', JSON.stringify(data.user));
-        })
-        .catch(() => {
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          setUser(null);
-        })
-        .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
-    }
+    // TESTING MODE: Skip token verification
+    setLoading(false);
   }, []);
 
   const login = async (credentials) => {
