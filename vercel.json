@@ -1,15 +1,16 @@
 {
-  "buildCommand": "npm install --prefix backend && npm install --prefix frontend",
-  "outputDirectory": ".",
-  "installCommand": "npm install --prefix api && npm install --prefix backend && npm install --prefix frontend",
+  "buildCommand": "npm install --prefix frontend",
+  "outputDirectory": "frontend/dist",
+  "installCommand": "npm install --prefix api && npm install --prefix frontend",
+  "functions": {
+    "api/**/*.js": {
+      "maxDuration": 60
+    }
+  },
   "env": {
     "DATABASE_URL": "@database_url",
-    "SUPABASE_URL": "@supabase_url",
-    "SUPABASE_KEY": "@supabase_key",
     "JWT_SECRET": "@jwt_secret",
     "JWT_EXPIRES_IN": "@jwt_expires_in",
-    "MAX_PHOTO_SIZE_MB": "@max_photo_size_mb",
-    "MAX_PHOTOS": "@max_photos",
     "FRONTEND_URL": "@frontend_url",
     "NODE_ENV": "production"
   },
@@ -22,6 +23,12 @@
           "value": "no-cache, no-store, must-revalidate"
         }
       ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
