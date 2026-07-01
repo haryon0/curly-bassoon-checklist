@@ -17,4 +17,5 @@ services:
     depends_on:
       - backend
     ports:
-      - "80:80"
+      # host:container — host 8989 because port 80 is already used on the VPS
+      - "8989:80"

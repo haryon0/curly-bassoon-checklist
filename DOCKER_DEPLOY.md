@@ -2,7 +2,7 @@
 
 Runs the app as two containers:
 
-- **frontend** — nginx serving the built Vite app on port **80**, and proxying `/api` to the backend.
+- **frontend** — nginx serving the built Vite app, published on host port **8989** (port 80 is already used on the VPS), and proxying `/api` to the backend.
 - **backend** — Express API on port 5000 (internal), with `uploads/` and `generated/` persisted to `./data` on the host.
 
 Database stays on **Supabase online** (via `DATABASE_URL`).
@@ -56,13 +56,13 @@ docker compose logs -f backend      # should print "Connected to Supabase Postgr
 ## 5. Test
 
 ```bash
-curl http://localhost/api/health      # -> {"status":"ok",...}
+curl http://localhost:8989/api/health      # -> {"status":"ok",...}
 ```
 
-Then open **http://YOUR_VPS_IP** in a browser. Make sure the VPS firewall allows port 80:
+Then open **http://YOUR_VPS_IP:8989** in a browser. Make sure the VPS firewall allows port 8989:
 
 ```bash
-sudo ufw allow 80/tcp
+sudo ufw allow 8989/tcp
 ```
 
 ---
