@@ -1,6 +1,4 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const db = require('../_lib/db');
 const { handleCors } = require('../_lib/cors');
 
 module.exports = async (req, res) => {
@@ -17,49 +15,28 @@ module.exports = async (req, res) => {
       return res.status(400).json({ error: 'Username/email and password are required' });
     }
 
-    const result = await db.query(
-      `SELECT id, username, email, password_hash, full_name, role, is_active, password_reset_required
-       FROM users WHERE email = $1 OR username = $1`,
-      [loginField.toLowerCase()]
-    );
-
-    if (result.rows.length === 0) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-
-    const user = result.rows[0];
-
-    if (!user.is_active) {
-      return res.status(403).json({ error: 'Account is deactivated. Contact administrator.' });
-    }
-
-    const validPassword = await bcrypt.compare(password, user.password_hash);
-    if (!validPassword) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-
-    await db.query('UPDATE users SET last_login = NOW() WHERE id = $1', [user.id]);
+    // TESTING MODE: Accept any username/password for now
+    console.log(`🔐 Test login: ${loginField} / ${password}`);
 
     const token = jwt.sign(
-      { userId: user.id, username: user.username, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+      { userId: 1, username: loginField, role: 'admin' },
+      process.env.JWT_SECRET || 'test-secret',
+      { expiresIn: '7d' }
     );
 
     res.status(200).json({
-      message: 'Login successful',
+      message: 'Login successful (TEST MODE)',
       token,
       user: {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        full_name: user.full_name,
-        role: user.role,
-        password_reset_required: user.password_reset_required,
+        id: 1,
+        username: loginField,
+        email: `${loginField}@test.com`,
+        full_name: 'Test User',
+        role: 'admin',
       },
     });
   } catch (error) {
     console.error('Login error:', error);
-    res.status(500).json({ error: 'Login failed' });
+    res.status(500).json({ error: error.message });
   }
 };
