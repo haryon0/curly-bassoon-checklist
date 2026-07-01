@@ -50,11 +50,11 @@ const usersRoutes = require('../backend/src/routes/admin.js');
 const templatesRoutes = require('../backend/src/routes/templates.js');
 const checklistsRoutes = require('../backend/src/routes/checklist.js');
 
-// Mount routes
-app.use('/api/auth', authRoutes);
-app.use('/api/users', usersRoutes);
-app.use('/api/templates', templatesRoutes);
-app.use('/api/checklists', checklistsRoutes);
+// Mount routes (without /api prefix - catch-all handler strips it)
+app.use('/auth', authRoutes);
+app.use('/users', usersRoutes);
+app.use('/templates', templatesRoutes);
+app.use('/checklists', checklistsRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

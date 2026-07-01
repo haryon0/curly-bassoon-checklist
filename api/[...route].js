@@ -3,10 +3,10 @@
 
 const app = require('./index.js');
 
-export default function handler(req, res) {
+module.exports = function handler(req, res) {
   // Remove /api prefix before passing to Express
   req.url = req.url.replace(/^\/api/, '') || '/';
 
   // Handle the request through Express
   return app(req, res);
-}
+};
