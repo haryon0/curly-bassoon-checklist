@@ -1,6 +1,9 @@
 const jwt = require('jsonwebtoken');
 const pool = require('../config/database');
 
+// TESTING MODE: login is temporarily disabled. When there is no valid token we
+// fall back to the first active admin so protected routes keep working.
+// To restore real auth, revert this file (see git history).
 const authenticateToken = async (req, res, next) => {
   try {
     // Support token via Authorization header OR query param (for iframe PDF preview)
@@ -12,17 +15,23 @@ const authenticateToken = async (req, res, next) => {
       token = req.query.token;
     }
 
-    if (!token) {
-      return res.status(401).json({ error: 'Access token required' });
+    let userId = null;
+    if (token) {
+      try {
+        userId = jwt.verify(token, process.env.JWT_SECRET).userId;
+      } catch {
+        userId = null; // TESTING MODE: ignore invalid/expired tokens
+      }
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    // Verify user still exists and is active
-    const result = await pool.query(
-      'SELECT id, username, email, full_name, role, is_active FROM users WHERE id = $1',
-      [decoded.userId]
-    );
+    const result = userId
+      ? await pool.query(
+          'SELECT id, username, email, full_name, role, is_active FROM users WHERE id = $1',
+          [userId]
+        )
+      : await pool.query(
+          "SELECT id, username, email, full_name, role, is_active FROM users WHERE role = 'admin' AND is_active = true ORDER BY id LIMIT 1"
+        );
 
     if (result.rows.length === 0 || !result.rows[0].is_active) {
       return res.status(401).json({ error: 'User not found or inactive' });
@@ -31,12 +40,6 @@ const authenticateToken = async (req, res, next) => {
     req.user = result.rows[0];
     next();
   } catch (err) {
-    if (err.name === 'JsonWebTokenError') {
-      return res.status(401).json({ error: 'Invalid token' });
-    }
-    if (err.name === 'TokenExpiredError') {
-      return res.status(401).json({ error: 'Token expired' });
-    }
     console.error('Auth middleware error:', err);
     res.status(500).json({ error: 'Authentication error' });
   }

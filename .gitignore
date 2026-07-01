@@ -1,0 +1,5 @@
+# Playwright MCP verification artifacts
+.playwright-mcp/
+
+# Environment files (never commit secrets)
+.env.local
