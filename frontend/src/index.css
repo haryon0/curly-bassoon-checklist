@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#FCFAF5] text-[#1F1B16] antialiased;
+  }
+}
+
+@layer components {
+  /* Material Symbols Icons */
+  .material-symbols-rounded {
+    @apply font-['Material_Symbols_Rounded'] text-[inherit] leading-none select-none;
+    font-feature-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-samara-primary text-white font-medium rounded-md
+           hover:bg-opacity-90 active:bg-opacity-80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-white text-stone-800 font-medium rounded-md
+           border border-stone-300 hover:border-stone-400 hover:bg-stone-50 active:bg-stone-100
+           transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-success {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-emerald-700 text-white font-medium rounded-md
+           hover:bg-emerald-800 active:bg-emerald-900 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white font-medium rounded-md
+           hover:bg-red-700 active:bg-red-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-white rounded-xl border border-stone-200 shadow-sm;
+  }
+
+  /* Forms */
+  .input {
+    @apply w-full px-3 py-2 border border-stone-300 rounded-lg text-sm
+           focus:outline-none focus:ring-1 focus:ring-samara-accent focus:border-transparent
+           placeholder-stone-400 disabled:bg-stone-50 disabled:text-stone-500;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-stone-700 mb-1;
+  }
+
+  /* Badges */
+  .badge-completed {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+           bg-emerald-100 text-emerald-700;
+  }
+
+  .badge-processing {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+           bg-amber-100 text-amber-700;
+  }
+
+  .badge-failed {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+           bg-red-100 text-red-700;
+  }
+
+  .badge-draft {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+           bg-stone-100 text-stone-600;
+  }
+
+  /* Typography */
+  .eyebrow {
+    @apply text-xs uppercase tracking-wider text-stone-500 font-semibold;
+  }
+
+  .h1-title {
+    @apply text-2xl font-semibold text-stone-900 tracking-tight;
+  }
+
+  .h2-section {
+    @apply text-lg font-semibold text-stone-900 tracking-tight;
+  }
+
+  .h3-subsection {
+    @apply text-base font-semibold text-stone-900;
+  }
+
+  .body-text {
+    @apply text-sm text-stone-600;
+  }
+
+  .body-small {
+    @apply text-xs text-stone-500;
+  }
+
+  .display-number {
+    @apply text-3xl font-semibold tabular-nums;
+  }
+
+  .text-link {
+    @apply text-sm text-samara-accent hover:underline cursor-pointer;
+  }
+}
