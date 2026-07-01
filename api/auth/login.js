@@ -29,16 +29,16 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { username, password } = req.body;
+    const { login: loginField, password } = req.body;
 
-    if (!username || !password) {
-      return res.status(400).json({ error: 'Username and password required' });
+    if (!loginField || !password) {
+      return res.status(400).json({ error: 'Username/email and password are required' });
     }
 
     // Find user
     const userResult = await db.query(
-      'SELECT id, username, password_hash, full_name, role, is_active FROM users WHERE username = $1 OR email = $1',
-      [username]
+      'SELECT id, username, email, password_hash, full_name, role, is_active FROM users WHERE username = $1 OR email = $1',
+      [loginField.toLowerCase()]
     );
 
     if (userResult.rows.length === 0) {
@@ -69,10 +69,12 @@ module.exports = async (req, res) => {
     await db.query('UPDATE users SET last_login = NOW() WHERE id = $1', [user.id]);
 
     res.status(200).json({
+      message: 'Login successful',
       token,
       user: {
         id: user.id,
         username: user.username,
+        email: user.email,
         full_name: user.full_name,
         role: user.role,
       },

@@ -1,14 +1,15 @@
 {
   "permissions": {
     "allow": [
+      "Bash(git merge *)",
+      "Bash(git push *)",
+      "Bash(cd \"d:\\\\Antigravity\\\\checklist v2\\\\checklist-management\" && rm -f .claude/settings.json && git merge master --allow-unrelated-histories -m \"Merge master branch into main\" && git push origin main)",
       "Bash(node -e ' *)",
-      "Bash(pkill -f \"vite|node\")",
-      "Bash(npm run *)",
-      "PowerShell(Stop-Process -Force -ErrorAction SilentlyContinue)",
-      "Bash(find \"C:\\\\Users\\\\masha\\\\AppData\" -name \"material-symbols-test.png\" -o -name \"page-*.png\" 2>/dev/null | head -3)",
-      "Read(//c/Users/masha/AppData/**)",
-      "PowerShell(New-Item -ItemType Directory -Path \"d:\\\\Antigravity\\\\checklist v2\\\\checklist-management\\\\frontend\\\\public\" -Force)",
-      "PowerShell(Copy-Item \"d:\\\\Antigravity\\\\Dashboard OPS Trackers\\\\Rascal-UI-Kit-main\\\\assets\\\\logo\\\\samaralombok\\\\samaralombok-primary.png\" -Destination \"d:\\\\Antigravity\\\\checklist v2\\\\checklist-management\\\\frontend\\\\public\\\\samara-logo.png\" -Force)"
+      "Bash(cd \"d:\\\\Antigravity\\\\checklist v2\\\\checklist-management\" && mv \"api/[...route].js\" \"api/[...api].js\")"
+    ],
+    "additionalDirectories": [
+      "d:\\Antigravity\\checklist v2\\checklist-management\\.claude",
+      "D:\\Antigravity\\checklist v2\\checklist-management\\api"
     ]
   }
 }
