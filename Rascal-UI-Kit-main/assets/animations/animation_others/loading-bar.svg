@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 4" width="200" height="4" role="img" aria-label="Loading">
-  <rect width="200" height="4" rx="2" fill="#e7e5e4"/>
-  <rect width="60" height="4" rx="2" fill="#011132">
-    <animate attributeName="x" values="-60;200" dur="1.5s" repeatCount="indefinite"/>
-  </rect>
-</svg>

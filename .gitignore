@@ -13,3 +13,16 @@ SETUP_VERCEL_ENV.md
 login-page.png
 login-redesign.png
 material-symbols-test.png
+test-db.js
+
+# Editor / tooling
+.claude/
+
+# Vendored UI kit and internal planning docs (kept locally only)
+Rascal-UI-Kit-main/
+docs/
+
+# Local deployment notes (kept locally only)
+DEPLOYMENT_READY.md
+DOCKER_DEPLOY.md
+MANUAL_REDEPLOY.md
