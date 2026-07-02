@@ -1,3 +1,0 @@
-[     428ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=e61312c7:21550
-[     684ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:5173/login:0
-[   72367ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:5173/@vite/client:559
