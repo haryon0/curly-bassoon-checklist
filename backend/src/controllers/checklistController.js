@@ -111,28 +111,30 @@ const submitChecklist = async (req, res) => {
 // GET /api/checklist/my
 const getMyChecklists = async (req, res) => {
   try {
+    const isAdmin = req.user.role === 'admin';
     const page = Math.max(1, parseInt(req.query.page) || 1);
     const limit = Math.min(50, parseInt(req.query.limit) || 10);
     const offset = (page - 1) * limit;
 
-    const countResult = await pool.query(
-      'SELECT COUNT(*) FROM checklists WHERE user_id = $1',
-      [req.user.id]
-    );
+    // Admins see every user's checklists; regular users only their own.
+    const countResult = isAdmin
+      ? await pool.query('SELECT COUNT(*) FROM checklists')
+      : await pool.query('SELECT COUNT(*) FROM checklists WHERE user_id = $1', [req.user.id]);
     const total = parseInt(countResult.rows[0].count);
 
-    const result = await pool.query(
-      `SELECT c.id, c.title, c.location, c.status, c.result_pdf_size,
-              c.created_at, c.updated_at,
-              t.name as template_name, t.code as template_code,
-              (SELECT COUNT(*) FROM checklist_photos WHERE checklist_id = c.id) as photo_count
-       FROM checklists c
-       LEFT JOIN checklist_templates t ON c.template_id = t.id
-       WHERE c.user_id = $1
-       ORDER BY c.created_at DESC
-       LIMIT $2 OFFSET $3`,
-      [req.user.id, limit, offset]
-    );
+    const baseSelect = `
+      SELECT c.id, c.title, c.location, c.status, c.result_pdf_filename, c.result_pdf_size,
+             c.created_at, c.updated_at,
+             t.name as template_name, t.code as template_code,
+             u.full_name as owner_name, u.username as owner_username,
+             (SELECT COUNT(*) FROM checklist_photos WHERE checklist_id = c.id) as photo_count
+      FROM checklists c
+      LEFT JOIN checklist_templates t ON c.template_id = t.id
+      LEFT JOIN users u ON c.user_id = u.id`;
+
+    const result = isAdmin
+      ? await pool.query(`${baseSelect} ORDER BY c.created_at DESC LIMIT $1 OFFSET $2`, [limit, offset])
+      : await pool.query(`${baseSelect} WHERE c.user_id = $1 ORDER BY c.created_at DESC LIMIT $2 OFFSET $3`, [req.user.id, limit, offset]);
 
     res.json({
       checklists: result.rows,
@@ -149,17 +151,20 @@ const getChecklistById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const result = await pool.query(
-      `SELECT c.id, c.title, c.location, c.notes, c.status,
+    const isAdmin = req.user.role === 'admin';
+    const detailSelect = `SELECT c.id, c.title, c.location, c.notes, c.status,
               c.result_pdf_filename, c.result_pdf_size, c.created_at,
               t.name as template_name, t.code as template_code,
               u.full_name, u.username
        FROM checklists c
        LEFT JOIN checklist_templates t ON c.template_id = t.id
        LEFT JOIN users u ON c.user_id = u.id
-       WHERE c.id = $1 AND c.user_id = $2`,
-      [id, req.user.id]
-    );
+       WHERE c.id = $1`;
+
+    // Admins can open any checklist; regular users only their own.
+    const result = isAdmin
+      ? await pool.query(detailSelect, [id])
+      : await pool.query(`${detailSelect} AND c.user_id = $2`, [id, req.user.id]);
 
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Checklist not found' });
@@ -185,11 +190,11 @@ const deleteChecklist = async (req, res) => {
     await client.query('BEGIN');
     const { id } = req.params;
 
-    // Get checklist (must belong to user)
-    const result = await client.query(
-      'SELECT id, result_pdf_path FROM checklists WHERE id = $1 AND user_id = $2',
-      [id, req.user.id]
-    );
+    // Get checklist (admins may delete any; regular users only their own)
+    const isAdmin = req.user.role === 'admin';
+    const result = isAdmin
+      ? await client.query('SELECT id, result_pdf_path FROM checklists WHERE id = $1', [id])
+      : await client.query('SELECT id, result_pdf_path FROM checklists WHERE id = $1 AND user_id = $2', [id, req.user.id]);
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Checklist not found' });
     }
@@ -228,10 +233,11 @@ const downloadChecklist = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const result = await pool.query(
-      'SELECT result_pdf_path, result_pdf_filename, status FROM checklists WHERE id = $1 AND user_id = $2',
-      [id, req.user.id]
-    );
+    // Admins can download any checklist PDF; regular users only their own.
+    const isAdmin = req.user.role === 'admin';
+    const result = isAdmin
+      ? await pool.query('SELECT result_pdf_path, result_pdf_filename, status FROM checklists WHERE id = $1', [id])
+      : await pool.query('SELECT result_pdf_path, result_pdf_filename, status FROM checklists WHERE id = $1 AND user_id = $2', [id, req.user.id]);
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Checklist not found' });
     }

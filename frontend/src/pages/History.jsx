@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { checklistAPI } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 
 const formatDate = (d) => d ? new Date(d).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
 const formatSize = (b) => b ? (b < 1024 * 1024 ? `${(b / 1024).toFixed(0)} KB` : `${(b / (1024 * 1024)).toFixed(1)} MB`) : '-';
@@ -18,6 +19,8 @@ const StatusBadge = ({ status }) => {
 };
 
 export default function History() {
+  const { user } = useAuth();
+  const isAdmin = user?.role === 'admin';
   const [checklists, setChecklists] = useState([]);
   const [pagination, setPagination] = useState({ page: 1, pages: 1, total: 0 });
   const [loading, setLoading] = useState(true);
@@ -63,7 +66,10 @@ export default function History() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-stone-900">History Checklist</h1>
-          <p className="text-sm text-stone-500 mt-1">Total: {pagination.total} checklist</p>
+          <p className="text-sm text-stone-500 mt-1">
+            {isAdmin && <span className="text-samara-accent font-medium">Semua user · </span>}
+            Total: {pagination.total} checklist
+          </p>
         </div>
         <Link to="/checklist/new" className="btn-primary">
           <span className="material-symbols-rounded">add</span> New Checklist
@@ -100,7 +106,12 @@ export default function History() {
                       <Link to={`/checklist/${item.id}`} className="font-medium text-stone-900 hover:text-samara-accent text-sm line-clamp-1">
                         {item.title}
                       </Link>
-                      <div className="text-xs text-stone-400 mt-0.5">{formatDate(item.created_at)}</div>
+                      <div className="text-xs text-stone-400 mt-0.5">
+                        {formatDate(item.created_at)}
+                        {isAdmin && item.owner_name && (
+                          <span className="ml-2 text-samara-accent">· oleh {item.owner_name}</span>
+                        )}
+                      </div>
                     </div>
                     <div className="sm:col-span-2 text-sm text-stone-600 truncate hidden sm:block">{item.template_code || '-'}</div>
                     <div className="sm:col-span-2 text-sm text-stone-500 truncate hidden sm:block">{item.location || '-'}</div>
