@@ -92,10 +92,6 @@ export default function Login() {
             </p>
           </div>
 
-          <div className="mt-6 p-3 bg-amber-50 rounded-lg border border-amber-200">
-            <p className="text-xs text-amber-700 font-medium">Demo Admin:</p>
-            <p className="text-xs text-amber-600">Username: admin · Password: Admin@1234</p>
-          </div>
         </div>
 
         {/* Brand info */}
