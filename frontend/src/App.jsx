@@ -23,9 +23,8 @@ export default function App() {
     <AuthProvider>
       <ToastContainer position="top-right" autoClose={4000} hideProgressBar={false} newestOnTop />
       <Routes>
-        {/* TESTING MODE: login/register disabled — redirect to the app */}
-        <Route path="/login" element={<Navigate to="/dashboard" replace />} />
-        <Route path="/register" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/change-password" element={<ChangePasswordRequired />} />
           <Route element={<Layout />}>

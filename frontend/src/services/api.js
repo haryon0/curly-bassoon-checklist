@@ -12,10 +12,17 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// TESTING MODE: login disabled — do not force-redirect to /login on 401.
+// Handle 401 globally
 api.interceptors.response.use(
   (res) => res,
-  (err) => Promise.reject(err)
+  (err) => {
+    if (err.response?.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+    }
+    return Promise.reject(err);
+  }
 );
 
 export const authAPI = {
